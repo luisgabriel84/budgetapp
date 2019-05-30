@@ -104,8 +104,25 @@ var UIcontroller = (function(){
             document.querySelector(element).insertAdjacentHTML('beforeend',newHtml);
         },
 
+        clearFields: function(){
+            var fields, fieldsArr;
+            fields = document.querySelectorAll( DOMStrings.inputDescription + ','+ DOMStrings.inputValue );
+
+            fieldsArr = Array.prototype.slice.call(fields);
+
+            fieldsArr.forEach(function(curr, index, arr){
+                curr.value ="";
+            });
+
+            fieldsArr[0].focus();
+
+
+        },
         getDOMStrings: function(){
             return DOMStrings;
+        },
+        getFields: function(){
+            return clearFields();
         }
 
     };
@@ -124,7 +141,7 @@ var controller = (function( budgetCtrl, UICtrl ){
         document.addEventListener('keypress',function(event){
 
             if(event.keyCode==13){
-            ctlrAddItem();
+                ctlrAddItem();
             }
             
         });
@@ -136,6 +153,7 @@ var controller = (function( budgetCtrl, UICtrl ){
        input = UICtrl.getInput();
        newItem =  budgetController.addItem(input.type, input.description,input.value);
        UICtrl.addListItem(newItem, input.type);
+       UICtrl.clearFields();
     };
 
     return {
